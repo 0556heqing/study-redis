@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+}
+
+group 'com.heqing.redis'
+version '1.0-SNAPSHOT'
+
+// 指定编译编译.java文件的jdk版本
+sourceCompatibility = 1.8
+// 确保class文件与targetCompatibility指定版本，或者更新的java虚拟机兼容
+targetCompatibility = 1.8
+// java编译的时候缺省状态下会因为中文字符而失败
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+// 编译JAVA文件时采用UTF-8
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    // spring 框架版本
+    spring_version = '5.2.6.RELEASE'
+    // 阿里Json工具包版本
+    fastjson_version = '1.2.70'
+    // 构造器版本
+    lombok_version = '1.18.12'
+    // 日志版本
+    log4j_version = '1.7.30'
+    // 单元测试包版本
+    junit_version = '4.12'
+}
+
+dependencies {
+    compile group: 'org.springframework', name: 'spring-context', version: spring_version
+    compile group: 'org.springframework.data', name: 'spring-data-redis', version: '2.1.18.RELEASE'
+    // lettuce 客户端
+    compile  group: 'io.lettuce', name: 'lettuce-core', version: '5.1.8.RELEASE'
+    // jedis 客户端
+    compile group: 'redis.clients', name: 'jedis', version: '2.9.3'
+    // redisson
+    compile group: 'org.redisson', name: 'redisson', version: '3.10.0'
+    // spring-data-redis 依赖的包
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
+    compile group: 'org.msgpack', name: 'jackson-dataformat-msgpack', version: '0.8.20'
+
+    // 日志框架
+    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: log4j_version
+    // 阿里Json框架
+    compile group: 'com.alibaba', name: 'fastjson', version: fastjson_version
+    // 构造器注解
+    compile group: 'org.projectlombok', name: 'lombok', version: lombok_version
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombok_version
+
+    // 测试框架
+    testCompile group: 'junit', name: 'junit', version: junit_version
+    testCompile group: 'org.springframework', name: 'spring-test', version: spring_version
+}
